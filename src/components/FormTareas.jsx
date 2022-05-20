@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { agregarTarea, editarActivo, editarTareaNew } from '../redux/slices/tareas';
+import { agregarTarea, editarActivo, editarTarea } from '../redux/slices/tareas';
 import { generarId } from '../utils/generarId';
 
 const FormTareas = () => {
 
-  const { editarTarea }  =  useSelector((state) => state.tareas);
+  const { editar }  =  useSelector((state) => state.tareas);
   const dispatch = useDispatch();
   const [input, setInput] = useState({
     nombre: ""
@@ -27,8 +27,8 @@ const FormTareas = () => {
       return;
     }
 
-    if(editarTarea) {
-      dispatch(editarTareaNew(input))
+    if(editar[0]) {
+      dispatch(editarTarea(input))
 
       // Se limpia el input luego de apretar el boton cancelar
       setInput({
@@ -48,12 +48,12 @@ const FormTareas = () => {
   }
 
   useEffect(() => {
-    if (editarTarea[0]) {
-      setInput(editarTarea[0]);
+    if (editar[0]) {
+      setInput(editar[0]);
     } else {
       setInput(input);
     }
-  }, [editarTarea[0]]);
+  }, [editar[0]]);
 
   const cancelar = () => {
     dispatch(editarActivo())
@@ -72,8 +72,8 @@ const FormTareas = () => {
         value={nombre}
         onChange={handleChange}
       />
-      <button type="submit" className="btn">{ editarTarea[0] ? 'ACTUALIZAR' : 'AGREGAR' }</button>
-      { editarTarea[0] && <button type="submit" className="cancelar" onClick={cancelar}>CANCELAR</button>}
+      <button type="submit" className="btn">{ editar[0] ? 'ACTUALIZAR' : 'AGREGAR' }</button>
+      { editar[0] && <button type="submit" className="cancelar" onClick={cancelar}>CANCELAR</button>}
     </form>
   );
 };

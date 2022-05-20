@@ -4,9 +4,8 @@ import { list } from '../../../utils/data';
 export const tareasSlice = createSlice({
 	name: 'tareas',
 	initialState: {
-		listaTareas: list,
-    	// editar: false,
-    	editarTarea: []
+		listaTareas: [],
+    	editar: []
 	},
 	reducers: {
 		agregarTarea: (state, action) => {
@@ -23,18 +22,16 @@ export const tareasSlice = createSlice({
     		] = action.payload.newTarea;
 		},
 		editarActivo: (state, action) => {
-			// state.editar = !state.editar;
-			state.editarTarea.splice(0, 1, action.payload)
+			state.editar.splice(0, 1, action.payload)
 		},
-		editarTareaNew: (state, action) => {
+		editarTarea: (state, action) => {
 			state.listaTareas[
         		state.listaTareas.findIndex((item) => item.id === action.payload.id)
       		] = action.payload;
-      		// state.editar = !state.editar;
 		}
 	}
 })
 
-export const { agregarTarea, eliminarTarea, cambiarEstado, editarActivo, editarTareaNew } = tareasSlice.actions;
+export const { agregarTarea, eliminarTarea, cambiarEstado, editarActivo, editarTarea } = tareasSlice.actions;
 
 export default tareasSlice.reducer;
